@@ -28,4 +28,28 @@ describe E4U::Emoji do
       emj.black_sun_with_rays.should == expect
     end
   end
+
+  it "DoCoMo絵文字で複合絵文字を返すこと" do
+    E4U.create(:docomo).love_hotel.should_not == [0xE669,0xE6EF].pack('U')
+    E4U.create(:docomo).sun_behind_cloud.should_not == [0xE63E,0xE63F].pack('U')
+
+    E4U.create(:docomo).love_hotel.should == [0xE669,0xE6EF].pack('U*')
+    E4U.create(:docomo).sun_behind_cloud.should == [0xE63E,0xE63F].pack('U*')
+  end
+
+  it "KDDI絵文字で複合絵文字を返すこと" do
+    E4U.create(:kddi).happy_face_with_open_mouth_and_cold_sweat.should_not == [0xE471,0xE5B1].pack('U')
+
+    E4U.create(:kddi).happy_face_with_open_mouth_and_cold_sweat.should == [0xE471,0xE5B1].pack('U*')
+  end
+
+  it "Softbank絵文字で複合絵文字を返すこと" do
+    E4U.create(:softbank).happy_face_with_open_mouth_and_cold_sweat.should_not == [0xE415,0xE331].pack('U')
+    E4U.create(:softbank).love_letter.should_not == [0xE103,0xE328].pack('U')
+    E4U.create(:softbank).sun_behind_cloud.should_not == [0xE04A,0xE049].pack('U')
+
+    E4U.create(:softbank).happy_face_with_open_mouth_and_cold_sweat.should == [0xE415,0xE331].pack('U*')
+    E4U.create(:softbank).love_letter.should == [0xE103,0xE328].pack('U*')
+    E4U.create(:softbank).sun_behind_cloud.should == [0xE04A,0xE049].pack('U*')
+  end
 end
