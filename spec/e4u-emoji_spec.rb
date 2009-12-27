@@ -52,4 +52,20 @@ describe E4U::Emoji do
     E4U.create(:softbank).love_letter.should == [0xE103,0xE328].pack('U*')
     E4U.create(:softbank).sun_behind_cloud.should == [0xE04A,0xE049].pack('U*')
   end
+
+  it "DoCoMo絵文字データがfreezeされていること" do
+    E4U::Emoji::DOCOMO_TABLE.all?{ |e| e[1].frozen? }.should be_true
+  end
+
+  it "KDDI絵文字データがfreezeされていること" do
+    E4U::Emoji::KDDI_TABLE.all?{ |e| e[1].frozen? }.should be_true
+  end
+
+  it "Softbank絵文字データがfreezeされていること" do
+    E4U::Emoji::SOFTBANK_TABLE.all?{ |e| e[1].frozen? }.should be_true
+  end
+
+  it "Google絵文字データがfreezeされていること" do
+    E4U::Emoji::GOOGLE_TABLE.all?{ |e| e[1].frozen? }.should be_true
+  end
 end

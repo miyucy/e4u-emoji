@@ -14,11 +14,11 @@ def make_emoji_table output, target, label
 
     if emj[target]
       hex = emj[target].to_s.tr('>', '').split(/\+/, -1).map{|e| "0x%X" % [e.hex]}
-      val = "[#{hex.join(',')}].pack('U*').freeze"
+      val = "[#{hex.join(',')}].pack('U*')"
     elsif emj[:text_fallback] || emj[:text_repr]
       val = (emj[:text_fallback] || emj[:text_repr]).dump
     else
-      val = "[0x3013].pack('U').freeze"
+      val = "[0x3013].pack('U')"
     end
 
     values[key] = val
@@ -32,7 +32,7 @@ module E4U
   class Emoji
     <%= label %> = {
 <% values.sort.each do |key,val| -%>
-      <%= ":" + key.ljust(mlen) %> => <%= val %>,
+      <%= ":" + key.ljust(mlen) %> => <%= val %>.freeze,
 <% end -%>
     }.freeze
   end
